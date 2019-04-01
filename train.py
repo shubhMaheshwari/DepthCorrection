@@ -12,7 +12,7 @@ import os
 # Get the Hyperparaeters 
 opt = TrainOptions().parse()
 
-sample_dataset = DataSet(opt,"/media/shubh/PranayHDD/Kinect/")
+sample_dataset = DataSet(opt,"/home/kaneki993/Kinect/")
 train_sampler,val_sampler = create_samplers(sample_dataset.__len__(),opt.split_ratio)
 data_loader = torch.utils.data.DataLoader(sample_dataset,sampler=train_sampler,batch_size=opt.batch_size,num_workers=opt.num_workers)
 data_val_loader = torch.utils.data.DataLoader(sample_dataset,sampler=val_sampler,batch_size=opt.val_batch_size,num_workers=0,shuffle=False)
