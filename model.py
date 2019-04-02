@@ -72,28 +72,34 @@ class Decoder(nn.Module):
 		self.get_image = nn.Sequential(
 		nn.ConvTranspose2d(1024, 512, 3,stride=2, padding=1),
 		nn.LeakyReLU(0.2,inplace=True),
+		nn.BatchNorm2d(512),
 
 		nn.ConvTranspose2d(512, 512, 3, stride=2, padding=1),
 		nn.LeakyReLU(0.2,inplace=True),
+		nn.BatchNorm2d(512),
 
 		nn.ConvTranspose2d(512, 512, 3, padding=1),
 		nn.LeakyReLU(0.2,inplace=True),
+		nn.BatchNorm2d(512),
 
 		nn.ConvTranspose2d(512, 256, 3, stride=2, padding=1,output_padding=(1,0)),
 		nn.LeakyReLU(0.2,inplace=True),
-
+		nn.BatchNorm2d(256),
 
 		nn.ConvTranspose2d(256, 256, 3, padding=1),
 		nn.LeakyReLU(0.2,inplace=True),
-		
+		nn.BatchNorm2d(256),
+
 		nn.ConvTranspose2d(256, 128, 3, stride=2, padding=1,output_padding=(1,0)),
 		nn.LeakyReLU(0.2,inplace=True),
+		nn.BatchNorm2d(128),
+
 
 		nn.ConvTranspose2d(128, 64, 3, stride=2, padding=1,output_padding=(1,0)),
 		nn.LeakyReLU(0.2,inplace=True),
+		nn.BatchNorm2d(64),
 
 		nn.ConvTranspose2d(64, 1, 3, stride=1, padding=1),
-		nn.LeakyReLU(0.2,inplace=True)
 		)
 
 		self.relu = nn.LeakyReLU()
