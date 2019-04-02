@@ -58,7 +58,7 @@ else:
 	
 # Loss functons(Cross Entropy)
 # Adam optimizer
-criterion_sample = torch.nn.MSELoss().to(device)
+criterion_sample = torch.nn.L1Loss().to(device)
 optimizer = optim.Adam(model.parameters(), lr=opt.lr,weight_decay=opt.weight_decay)
 
 def save_model(model,epoch):

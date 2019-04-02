@@ -24,7 +24,7 @@ class DataSet(torch.utils.data.Dataset):
 
 		# Store the filenames of all rgb and depth images avaiable
 		sequences = [dirname for dirname in os.listdir(dirpath) if os.path.isdir(os.path.join(dirpath,dirname))] # Find all directories 
-
+		sequences = sequences[0:2]
 		total_rgb_images = [] # Store all rgb images here
 		total_depth_images = [] # Store all depth images here
 
@@ -78,7 +78,7 @@ class DataSet(torch.utils.data.Dataset):
 				depth_images: torch.Tensor contains corrupted depth images from t to t+k 
 				original depth: torch.Tensor contaning the depth image(t+k) that needs to be predicted by the model
 		"""
-		idx = idx % 2	
+		# idx = idx % 2	
 
 		sequence_id = idx // self.images_per_sequence
 		frame_id = idx % self.images_per_sequence

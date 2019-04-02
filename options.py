@@ -12,7 +12,7 @@ class BaseOptions(object):
 		self.device = None
 	def initialize(self):
 		# Basic Details
-		self.parser.add_argument('--batch_size',type=int, default=1, help='Batch Size for each iternations')
+		self.parser.add_argument('--batch_size',type=int, default=3, help='Batch Size for each iternations')
 		self.parser.add_argument('--val_batch_size',type=int, default=1, help='Batch Size for each iternations')
 		self.parser.add_argument('--gpus', default='0', help='-1: cpu else is a list of gpu ids eg. 0,1,2')
 		self.parser.add_argument('--use_gpu',type=bool, default=True, help='Whether to use gpu')
