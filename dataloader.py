@@ -64,6 +64,7 @@ class DataSet(torch.utils.data.Dataset):
 			Takes a depth image and corrupts it using dialation:
 		"""
 		corrupted_depth = scipy.ndimage.grey_dilation(depth_image, size=(5,5), structure=np.ones((5,5)))
+		# corrupted_depth = depth_image
 
 		return (corrupted_depth/255.0).astype('float32')
 
@@ -77,7 +78,7 @@ class DataSet(torch.utils.data.Dataset):
 				depth_images: torch.Tensor contains corrupted depth images from t to t+k 
 				original depth: torch.Tensor contaning the depth image(t+k) that needs to be predicted by the model
 		"""
-		idx = idx % 2
+		idx = idx % 2	
 
 		sequence_id = idx // self.images_per_sequence
 		frame_id = idx % self.images_per_sequence

@@ -13,28 +13,46 @@ class C3D(nn.Module):
 		self.get_features = nn.Sequential(
 		nn.Conv3d(input_channel, 64, kernel_size=(3, 3, 3), padding=(1, 1, 1)),
 		nn.LeakyReLU(0.2,inplace=True),
+		nn.BatchNorm3d(64),
+
 		nn.MaxPool3d(kernel_size=(1, 2, 2), stride=(1, 2, 2)),
 
 		nn.Conv3d(64, 128, kernel_size=(3, 3, 3), padding=(1, 1, 1)),
 		nn.LeakyReLU(0.2,inplace=True),
+		nn.BatchNorm3d(128),
+
 		nn.MaxPool3d(kernel_size=(2, 2, 2), stride=(2, 2, 2)),
 
 		nn.Conv3d(128, 256, kernel_size=(3, 3, 3), padding=(1, 1, 1)),
 		nn.LeakyReLU(0.2,inplace=True),
+		nn.BatchNorm3d(256),
+
 		nn.Conv3d(256, 256, kernel_size=(3, 3, 3), padding=(1, 1, 1)),
 		nn.LeakyReLU(0.2,inplace=True),
+		nn.BatchNorm3d(256),
+		
 		nn.MaxPool3d(kernel_size=(2, 2, 2), stride=(2, 2, 2)),
 
 		nn.Conv3d(256, 512, kernel_size=(3, 3, 3), padding=(1, 1, 1)),
 		nn.LeakyReLU(0.2,inplace=True),
+		nn.BatchNorm3d(512),
+		
 		nn.Conv3d(512, 512, kernel_size=(3, 3, 3), padding=(1, 1, 1)),
 		nn.LeakyReLU(0.2,inplace=True),
+		nn.BatchNorm3d(512),
+		
 		nn.MaxPool3d(kernel_size=(2, 2, 2), stride=(2, 2, 2)),
 
 		nn.Conv3d(512, 512, kernel_size=(3, 3, 3), padding=(1, 1, 1)),
 		nn.LeakyReLU(0.2,inplace=True),
+		nn.BatchNorm3d(512),
+
 		nn.Conv3d(512, 512, kernel_size=(3, 3, 3), padding=(1, 1, 1)),
 		nn.LeakyReLU(0.2,inplace=True),
+		nn.BatchNorm3d(512),
+		
+		
+
 		nn.MaxPool3d(kernel_size=(2, 2, 2), stride=(2, 2, 2), padding=(0, 1, 1))
 		)
 
@@ -102,9 +120,9 @@ class Model(nn.Module):
 	def forward(self,RGBimages,Depthimages):
 		rgb_encoding = self.rgb3D(RGBimages)   
 		depth_encoding = self.depth3D(Depthimages)	
-
+		print(rgb_encoding)
 		concat_embedding = torch.cat((rgb_encoding, depth_encoding), 1)
 		concat_embedding = concat_embedding.squeeze(2)
 
-		pred_depth_image = self.depth2d(concat_embedding)	
+		pred_depth_image = torch.sigmoid(self.depth2d(concat_embedding))	
 		return pred_depth_image

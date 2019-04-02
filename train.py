@@ -12,7 +12,7 @@ import os
 # Get the Hyperparaeters 
 opt = TrainOptions().parse()
 
-sample_dataset = DataSet(opt,"/home/kaneki993/Kinect/")
+sample_dataset = DataSet(opt,"/media/shubh/PranayHDD/Kinect/")
 train_sampler,val_sampler = create_samplers(sample_dataset.__len__(),opt.split_ratio)
 data_loader = torch.utils.data.DataLoader(sample_dataset,sampler=train_sampler,batch_size=opt.batch_size,num_workers=opt.num_workers)
 data_val_loader = torch.utils.data.DataLoader(sample_dataset,sampler=val_sampler,batch_size=opt.val_batch_size,num_workers=0,shuffle=False)
@@ -58,7 +58,7 @@ else:
 	
 # Loss functons(Cross Entropy)
 # Adam optimizer
-criterion_sample = torch.nn.L1Loss().to(device)
+criterion_sample = torch.nn.MSELoss().to(device)
 optimizer = optim.Adam(model.parameters(), lr=opt.lr,weight_decay=opt.weight_decay)
 
 def save_model(model,epoch):
@@ -78,11 +78,8 @@ for epoch in range(opt.epoch):
 		try:
 			optimizer.zero_grad()
 			pred_depth = model(rgb_images.to(device),depth_images.to(device))
-			print(original_depth)
-			print(corrupted_depth)
-			print(pred_depth)
 			# Calculate loss
-			loss = criterion_sample( pred_depth, original_depth.to(device))
+			loss = criterion_sample( pred_depth, (original_depth).to(device))
 		except Exception as e:
 			print("Error:",e)	
 			torch.cuda.empty_cache()
@@ -96,7 +93,9 @@ for epoch in range(opt.epoch):
 		if i % opt.print_iter == 0:
 			# print(pred_sample[4,:].cpu().data.numpy(),labels[4].numpy())
 			# Print loss
-			print("Iter:{}/{} Loss:{}".format(i,40, loss.cpu().data.numpy()))
+			# print(pred_depth)
+			# print(original_depth)
+			print("Iter:{}/{} Loss:{}".format(i,80, loss.cpu().data.numpy()))
 			loss_list.append(loss.cpu().data.numpy())
 			if opt.display:
 				vis.plot_loss(loss_list)

@@ -12,13 +12,13 @@ class BaseOptions(object):
 		self.device = None
 	def initialize(self):
 		# Basic Details
-		self.parser.add_argument('--batch_size',type=int, default=4, help='Batch Size for each iternations')
+		self.parser.add_argument('--batch_size',type=int, default=1, help='Batch Size for each iternations')
 		self.parser.add_argument('--val_batch_size',type=int, default=1, help='Batch Size for each iternations')
 		self.parser.add_argument('--gpus', default='0', help='-1: cpu else is a list of gpu ids eg. 0,1,2')
 		self.parser.add_argument('--use_gpu',type=bool, default=True, help='Whether to use gpu')
 
 		# Parameters for network
-		self.parser.add_argument('--model_sequence_length',type=int, default=4, help='For the model the total number of RGDB images used')
+		self.parser.add_argument('--model_sequence_length',type=int, default=3, help='For the model the total number of RGDB images used')
 		self.parser.add_argument('--total_sequence_length',type=int, default=200, help='total number of frames collected from kinect')
 
 
@@ -65,7 +65,7 @@ class TrainOptions(BaseOptions):
 		self.parser.add_argument('--epoch', type=int, default=100, help='Number of epoch')
 
 		# Hyperparameters
-		self.parser.add_argument('--lr', type=float, default=0.003, help='learning rate')
+		self.parser.add_argument('--lr', type=float, default=0.001, help='learning rate')
 		self.parser.add_argument('--lr_decay_iter', type=int, default=30, help='learning rate')
 		self.parser.add_argument('--lr_decay_param', type=float, default=0.9, help='learning rate')
 		self.parser.add_argument('--weight_decay', type=float, default=0.005, help='Regularization')
