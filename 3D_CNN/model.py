@@ -126,7 +126,6 @@ class Model(nn.Module):
 	def forward(self,RGBimages,Depthimages):
 		rgb_encoding = self.rgb3D(RGBimages)   
 		depth_encoding = self.depth3D(Depthimages)	
-		print(rgb_encoding)
 		concat_embedding = torch.cat((rgb_encoding, depth_encoding), 1)
 		concat_embedding = concat_embedding.squeeze(2)
 

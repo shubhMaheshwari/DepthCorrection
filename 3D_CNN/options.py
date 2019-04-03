@@ -12,7 +12,7 @@ class BaseOptions(object):
 		self.device = None
 	def initialize(self):
 		# Basic Details
-		self.parser.add_argument('--batch_size',type=int, default=3, help='Batch Size for each iternations')
+		self.parser.add_argument('--batch_size',type=int, default=1, help='Batch Size for each iternations')
 		self.parser.add_argument('--val_batch_size',type=int, default=1, help='Batch Size for each iternations')
 		self.parser.add_argument('--gpus', default='0', help='-1: cpu else is a list of gpu ids eg. 0,1,2')
 		self.parser.add_argument('--use_gpu',type=bool, default=True, help='Whether to use gpu')
@@ -28,7 +28,7 @@ class BaseOptions(object):
 
 
 		# Visdom settings during training
-		self.parser.add_argument('--display', type=bool, default=False, help='Visualize data')
+		self.parser.add_argument('--display', type=bool, default=True, help='Visualize data')
 		self.parser.add_argument('--display_server', type=str, default='http://localhost', help='visdom display host')
 		self.parser.add_argument('--display_port', type=int, default=8097, help='Visdom display port')
 
@@ -79,6 +79,7 @@ class TestOptions(BaseOptions):
 	def initialize(self):
 		BaseOptions.initialize(self)	
 		self.parser.add_argument('--mode', type=str, default="Test", help='Why are we running the model eg. Train , test, finetune etc.')
+		self.parser.add_argument('--test_results', type=str, default="./test_results", help='Location where result images are saved')
 
 if __name__ == "__main__":
 	train_opt = TrainOptions().parse()

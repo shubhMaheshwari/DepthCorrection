@@ -32,8 +32,7 @@ class Visualizer():
 		self.plot_graph(None,[loss_list],["Loss"] ,display_id=1,title='Loss over time',axis=['Epoch','Loss'])
 
 	def show_image(self,rgb_img,org_depth_img,corrupted_depth_img,pred_depth_img,display_id,title="Images"):        
-		print(np.mean(pred_depth_img))
-		print(np.mean(org_depth_img))
+
 		self.vis.images(
 			np.vstack((org_depth_img[::-1,::-1].T,corrupted_depth_img[::-1,::-1].T )),
 			win=display_id,
